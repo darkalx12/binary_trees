@@ -89,4 +89,4 @@ int is_perfect_looping(const binary_tree_t *tree,
 int binary_tree_is_perfect(const binary_tree_t *tree);
 int *heap_to_sorted_array(heap_t *heap, size_t *size);
 
-#endif /* BINARY_TRE
+#endif /* BINARY_TREES_H */
