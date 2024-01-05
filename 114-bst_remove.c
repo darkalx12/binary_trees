@@ -14,13 +14,13 @@ bst_t *successor(bst_t *root)
 }
 
 /**
- * delete - Deletes a node from a binary search tree.
+ * bst_delete - Deletes a node from a binary search tree.
  * @root: A pointer to the root node of the BST.
- * @node: A pointer to the node to delete from the BST.
+ * @node: A pointer to the node to bst_delete from the BST.
  *
  * Return: A pointer to the new root node after deletion.
  */
-bst_t *delete(bst_t *root, bst_t *node)
+bst_t *bst_delete(bst_t *root, bst_t *node)
 {
 	bst_t *parent = node->parent, *successor = NULL;
 
@@ -54,7 +54,7 @@ bst_t *delete(bst_t *root, bst_t *node)
 	successor = successor(node->right);
 	node->n = successor->n;
 
-	return (delete(root, successor));
+	return (bst_delete(root, successor));
 }
 
 /**
@@ -70,7 +70,7 @@ bst_t *bst_remove_looping(bst_t *root, bst_t *node, int value)
 	if (node != NULL)
 	{
 		if (node->n == value)
-			return (delete(root, node));
+			return (bst_delete(root, node));
 		if (node->n > value)
 			return (bst_remove_looping(root, node->left, value));
 		return (bst_remove_looping(root, node->right, value));
