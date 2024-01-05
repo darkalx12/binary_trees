@@ -94,5 +94,9 @@ void print_push(binary_tree_t *node, level_queue_t *head,
 		level_queue_t **tail, void (*func)(int));
 void dad(level_queue_t **head);
 void binary_tree_levelorder(const binary_tree_t *tree, void (*func)(int));
+bst_t *successor(bst_t *root);
+bst_t *delete(bst_t *root, bst_t *node);
+bst_t *bst_remove_looping(bst_t *root, bst_t *node, int value);
+bst_t *bst_remove(bst_t *root, int value);
 
 #endif /* BINARY_TREES_H */

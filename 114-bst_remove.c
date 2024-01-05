@@ -1,106 +1,94 @@
 #include "binary_trees.h"
-/**
- * owner - get the next owner i mean the min node in the right subtree
- * @node: tree to check
- * Return: the min value of this tree
- */
-int owner(bst_t *node)
-{
-	int left_side = 0;
 
-	if (node == NULL)
+/**
+ * successor - Returns the minimum value of a binary search tree.
+ * @root: A pointer to the root node of the BST to search.
+ *
+ * Return: The minimum value in @tree.
+ */
+bst_t *successor(bst_t *root)
+{
+	while (root->left != NULL)
+		root = root->left;
+	return (root);
+}
+
+/**
+ * delete - Deletes a node from a binary search tree.
+ * @root: A pointer to the root node of the BST.
+ * @node: A pointer to the node to delete from the BST.
+ *
+ * Return: A pointer to the new root node after deletion.
+ */
+bst_t *delete(bst_t *root, bst_t *node)
+{
+	bst_t *parent = node->parent, *successor = NULL;
+
+	/* No children or right-child only */
+	if (node->left == NULL)
 	{
-		return (0);
-	}
-	else
-	{
-		left_side = owner(node->left_side);
-		if (left_side == 0)
-		{
-			return (node->n);
-		}
-		return (left_side);
+		if (parent != NULL && parent->left == node)
+			parent->left = node->right;
+		else if (parent != NULL)
+			parent->right = node->right;
+		if (node->right != NULL)
+			node->right->parent = parent;
+		free(node);
+		return (parent == NULL ? node->right : root);
 	}
 
-}
-/**
- * second_child - function that gets the next owner using the min
- * value in the right subtree, and then replace the node value for
- * this owner
- * @root: node tat has two children
- * Return: the value found
- */
-int second_child(bst_t *root)
-{
-	int new_value = 0;
+	/* Left-child only */
+	if (node->right == NULL)
+	{
+		if (parent != NULL && parent->left == node)
+			parent->left = node->left;
+		else if (parent != NULL)
+			parent->right = node->left;
+		if (node->left != NULL)
+			node->left->parent = parent;
+		free(node);
+		return (parent == NULL ? node->left : root);
+	}
 
-	new_value = owner(root->right);
-	root->n = new_value;
-	return (new_value);
+	/* Two children */
+	successor = successor(node->right);
+	node->n = successor->n;
+
+	return (delete(root, successor));
 }
+
 /**
- *remove_type - function that removes a node depending of its children
- *@root: node to remove
- *Return: 0 if it has no children or other value if it has
+ * bst_remove_looping - Removes a node from a binary search tree recursively.
+ * @root: A pointer to the root node of the BST to remove a node from.
+ * @node: A pointer to the current node in the BST.
+ * @value: The value to remove from the BST.
+ *
+ * Return: A pointer to the root node after deletion.
  */
-int remove_type(bst_t *root)
+bst_t *bst_remove_looping(bst_t *root, bst_t *node, int value)
 {
-	if (!root->left_side && !root->right)
+	if (node != NULL)
 	{
-		if (root->parent->right == root)
-			root->parent->right = NULL;
-		else
-			root->parent->left_side = NULL;
-		free(root);
-		return (0);
+		if (node->n == value)
+			return (delete(root, node));
+		if (node->n > value)
+			return (bst_remove_looping(root, node->left, value));
+		return (bst_remove_looping(root, node->right, value));
 	}
-	else if ((!root->left_side && root->right) || (!root->right && root->left_side))
-	{
-		if (!root->left_side)
-		{
-			if (root->parent->right == root)
-				root->parent->right = root->right;
-			else
-				root->parent->left_side = root->right;
-			root->right->parent = root->parent;
-		}
-		if (!root->right)
-		{
-			if (root->parent->right == root)
-				root->parent->right = root->left_side;
-			else
-				root->parent->left_side = root->left_side;
-			root->left_side->parent = root->parent;
-		}
-		free(root);
-		return (0);
-	}
-	else
-		return (second_child(root));
+	return (NULL);
 }
+
 /**
- * bst_remove - remove a node from a BST tree
- * @root: root of the tree
- * @value: node with this value to remove
- * Return: the tree changed
+ * bst_remove - Removes a node from a binary search tree.
+ * @root: A pointer to the root node of the BST to remove a node from.
+ * @value: The value to remove in the BST.
+ *
+ * Return: A pointer to the new root node after deletion.
+ *
+ * Description: If the node to be deleted has two children, it
+ *              is replaced with its first in-order successor.
  */
 bst_t *bst_remove(bst_t *root, int value)
 {
-	int type = 0;
-
-	if (root == NULL)
-		return (NULL);
-	if (value < root->n)
-		bst_remove(root->left_side, value);
-	else if (value > root->n)
-		bst_remove(root->right, value);
-	else if (value == root->n)
-	{
-		type = remove_type(root);
-		if (type != 0)
-			bst_remove(root->right, type);
-	}
-	else
-		return (NULL);
-	return (root);
+	return (bst_remove_looping(root, root, value));
 }
