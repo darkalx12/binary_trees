@@ -16,7 +16,7 @@ bst_t *successor(bst_t *root)
 /**
  * bst_delete - Deletes a node from a binary search tree.
  * @root: A pointer to the root node of the BST.
- * @node: A pointer to the node to bst_delete from the BST.
+ * @node: A pointer to the node to delete from the BST.
  *
  * Return: A pointer to the new root node after deletion.
  */
