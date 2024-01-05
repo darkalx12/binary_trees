@@ -97,6 +97,6 @@ void binary_tree_levelorder(const binary_tree_t *tree, void (*func)(int));
 bst_t *successor(bst_t *root);
 bst_t *bst_delete(bst_t *root, bst_t *node);
 bst_t *bst_remove_looping(bst_t *root, bst_t *node, int value);
-bst_t *bst_remove(bst_t *root, int value);
+
 
 #endif /* BINARY_TREES_H */
