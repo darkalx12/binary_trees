@@ -3,22 +3,23 @@
 /**
  * binary_tree_node - Creates a binary tree node.
  * @parent: A pointer to the parent of the node to create.
- * @result: The result to put in the new node.
+ * @value: The value to put in the new node.
  *
  * Return: If an error occurs - NULL.
  *         Otherwise - a pointer to the new node.
  */
-binary_tree_d *binary_tree_node(binary_tree_d *parent, int result)
+binary_tree_t *binary_tree_node(binary_tree_t *parent, int value)
 {
-	binary_tree_d *new;
+	binary_tree_t *new;
 
-	new = malloc(sizeof(binary_tree_d));
+	new = malloc(sizeof(binary_tree_t));
 	if (new == NULL)
 		return (NULL);
 
-	new->n = result;
+	new->n = value;
 	new->parent = parent;
 	new->left = NULL;
 	new->right = NULL;
 
 	return (new);
+}
