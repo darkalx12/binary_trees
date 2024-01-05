@@ -1,12 +1,12 @@
 #include "binary_trees.h"
 
 /**
- * successor - Returns the minimum value of a binary search tree.
+ * inorder_successor - Returns the minimum value of a binary search tree.
  * @root: A pointer to the root node of the BST to search.
  *
  * Return: The minimum value in @tree.
  */
-bst_t *successor(bst_t *root)
+bst_t *inorder_successor(bst_t *root)
 {
 	while (root->left != NULL)
 		root = root->left;
@@ -51,29 +51,29 @@ bst_t *bst_delete(bst_t *root, bst_t *node)
 	}
 
 	/* Two children */
-	successor = successor(node->right);
+	successor = inorder_successor(node->right);
 	node->n = successor->n;
 
 	return (bst_delete(root, successor));
 }
 
 /**
- * bst_remove_looping - Removes a node from a binary search tree recursively.
+ * bst_remove_recursive - Removes a node from a binary search tree recursively.
  * @root: A pointer to the root node of the BST to remove a node from.
  * @node: A pointer to the current node in the BST.
  * @value: The value to remove from the BST.
  *
  * Return: A pointer to the root node after deletion.
  */
-bst_t *bst_remove_looping(bst_t *root, bst_t *node, int value)
+bst_t *bst_remove_recursive(bst_t *root, bst_t *node, int value)
 {
 	if (node != NULL)
 	{
 		if (node->n == value)
 			return (bst_delete(root, node));
 		if (node->n > value)
-			return (bst_remove_looping(root, node->left, value));
-		return (bst_remove_looping(root, node->right, value));
+			return (bst_remove_recursive(root, node->left, value));
+		return (bst_remove_recursive(root, node->right, value));
 	}
 	return (NULL);
 }
@@ -90,5 +90,5 @@ bst_t *bst_remove_looping(bst_t *root, bst_t *node, int value)
  */
 bst_t *bst_remove(bst_t *root, int value)
 {
-	return (bst_remove_looping(root, root, value));
+	return (bst_remove_recursive(root, root, value));
 }
