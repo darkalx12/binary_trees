@@ -1,17 +1,17 @@
 #include "binary_trees.h"
 
 /**
- * create_node - Creates a new level_queue_time node.
+ * create_node - Creates a new level_queue_t node.
  * @node: The binary tree node for the new node to contain.
  *
  * Return: If an error occurs, NULL.
  *         Otherwise, a pointer to the new node.
  */
-level_queue_time *create_node(binary_tree_t *node)
+level_queue_t *create_node(binary_tree_t *node)
 {
-	level_queue_time *new;
+	level_queue_t *new;
 
-	new = malloc(sizeof(level_queue_time));
+	new = malloc(sizeof(level_queue_t));
 	if (new == NULL)
 		return (NULL);
 
@@ -22,12 +22,12 @@ level_queue_time *create_node(binary_tree_t *node)
 }
 
 /**
- * set_queue - Frees a level_queue_time queue.
+ * set_queue - Frees a level_queue_t queue.
  * @head: A pointer to the head of the queue.
  */
-void set_queue(level_queue_time *head)
+void set_queue(level_queue_t *head)
 {
-	level_queue_time *tmp;
+	level_queue_t *tmp;
 
 	while (head != NULL)
 	{
@@ -39,7 +39,7 @@ void set_queue(level_queue_time *head)
 
 /**
  * print_push - Runs a function on a given binary tree node and
- *             pushes its children into a level_queue_time queue.
+ *             pushes its children into a level_queue_t queue.
  * @node: The binary tree node to print and push.
  * @head: A double pointer to the head of the queue.
  * @tail: A double pointer to the tail of the queue.
@@ -47,10 +47,10 @@ void set_queue(level_queue_time *head)
  *
  * Description: Upon malloc failure, exits with a status code of 1.
  */
-void print_push(binary_tree_t *node, level_queue_time *head,
-		level_queue_time **tail, void (*func)(int))
+void print_push(binary_tree_t *node, level_queue_t *head,
+		level_queue_t **tail, void (*func)(int))
 {
-	level_queue_time *new;
+	level_queue_t *new;
 
 	func(node->n);
 	if (node->left != NULL)
@@ -78,12 +78,12 @@ void print_push(binary_tree_t *node, level_queue_time *head,
 }
 
 /**
- * dad - Pops the head of a level_queue_time queue.
+ * dad - Pops the head of a level_queue_t queue.
  * @head: A double pointer to the head of the queue.
  */
-void dad(level_queue_time **head)
+void dad(level_queue_t **head)
 {
-	level_queue_time *tmp;
+	level_queue_t *tmp;
 
 	tmp = (*head)->next;
 	free(*head);
@@ -98,7 +98,7 @@ void dad(level_queue_time **head)
  */
 void binary_tree_levelorder(const binary_tree_t *tree, void (*func)(int))
 {
-	level_queue_time *head, *tail;
+	level_queue_t *head, *tail;
 
 	if (tree == NULL || func == NULL)
 		return;
