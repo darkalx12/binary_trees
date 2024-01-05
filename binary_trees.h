@@ -36,7 +36,7 @@ typedef struct levelorder_queue_s
 {
 	binary_tree_t *node;
 	struct levelorder_queue_s *next;
-} levelorder_queue_t;
+} level_queue_t;
 
 /* Printing helper function */
 void binary_tree_print(const binary_tree_t *);
@@ -88,5 +88,11 @@ int is_perfect_looping(const binary_tree_t *tree,
 		size_t leaf_dep, size_t level);
 int binary_tree_is_perfect(const binary_tree_t *tree);
 int *heap_to_sorted_array(heap_t *heap, size_t *size);
+level_queue_t *create_node(binary_tree_t *node);
+void set_queue(level_queue_t *head);
+void print_push(binary_tree_t *node, level_queue_t *head,
+		level_queue_t **tail, void (*func)(int));
+void dad(level_queue_t **head);
+void binary_tree_levelorder(const binary_tree_t *tree, void (*func)(int));
 
 #endif /* BINARY_TREES_H */
