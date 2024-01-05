@@ -36,7 +36,7 @@ typedef struct levelorder_queue_s
 {
 	binary_tree_t *node;
 	struct levelorder_queue_s *next;
-} levelorder_queue_t;
+} levelorder_queue_time;
 
 /* Printing helper function */
 void binary_tree_print(const binary_tree_t *);
